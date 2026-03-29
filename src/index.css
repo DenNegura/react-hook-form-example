@@ -1,0 +1,96 @@
+:root {
+    --bg-color: #282c34;
+    --font-family: 'Manrope', sans-serif;
+    --primary-color: #e3e3e3;
+    --secondary-color: #aaaaaa;
+    --revers-primary-color: #000000;
+    --border-color: #5a5a5a;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    background-color: var(--bg-color);
+}
+
+body {
+    margin: 0;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    font-family: var(--font-family), sans-serif;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+h1 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.app {
+    padding-block: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+hr {
+    width: 100%;
+    margin: 1rem 0;
+    border: none;
+    border-top: 1px solid var(--border-color);
+}
+
+form {
+    border: 1px solid var(--border-color);
+    border-radius: 0.7rem;
+    padding: 1.2rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.9rem;
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+input {
+    font-family: var(--font-family), sans-serif;
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border-radius: 0.5rem;
+    background-color: var(--primary-color);
+    color: var(--revers-primary-color);
+    border: 1px solid transparent;
+    font-size: 1.2rem;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+}
+
+input[type="submit"] {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: var(--secondary-color);
+}
+
+@media (width > 700px) {
+    .app, .root {
+        width: 700px;
+    }
+}
+
+@media (width < 700px) {
+    .app, .root {
+        width: 100%;
+    }
+}
