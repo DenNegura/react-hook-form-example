@@ -83,6 +83,11 @@ input[type="submit"]:hover {
     background-color: var(--secondary-color);
 }
 
+input[type="submit"]:disabled {
+    background-color: var(--border-color);
+    cursor: auto;
+}
+
 .errors {
     color: #ea4b31;
     font-size: 1rem;

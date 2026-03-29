@@ -6,15 +6,22 @@ function App() {
     const {
         register,
         formState: {errors},
-        handleSubmit
+        handleSubmit,
+        reset
     } = useForm({
         mode: "onChange",
         reValidateMode: "onSubmit",
         criteriaMode: "all",
+        defaultValues: async () => {
+                const data = await fetch('https://dummyjson.com/users/1')
+                    .then(res => res.json());
+                return {name: data.firstName + " " + data.lastName};
+            }
     });
 
     const onSubmit = (data) => {
         console.log(data);
+        reset();
     }
 
     return (
@@ -33,11 +40,11 @@ function App() {
                                message: "Minimum length should be 5"
                            },
                            maxLength: {
-                               value: 10,
+                               value: 20,
                                message: "Maximum length should be 10"
                            },
                            pattern: {
-                               value: /^[A-Za-z]+$/,
+                               value: /^[A-Za-z ]+$/,
                                message: "Must contain only letters"
                            },
                        })} />
