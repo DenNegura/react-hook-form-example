@@ -83,6 +83,11 @@ input[type="submit"]:hover {
     background-color: var(--secondary-color);
 }
 
+.errors {
+    color: #ea4b31;
+    font-size: 1rem;
+}
+
 @media (width > 700px) {
     .app, .root {
         width: 700px;
