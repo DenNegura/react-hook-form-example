@@ -8,8 +8,9 @@ function App() {
         formState: {errors},
         handleSubmit
     } = useForm({
-        mode: "onBlur",
-        reValidateMode: "onSubmit"
+        mode: "onChange",
+        reValidateMode: "onSubmit",
+        criteriaMode: "all",
     });
 
     const onSubmit = (data) => {
@@ -41,7 +42,12 @@ function App() {
                            },
                        })} />
                 <div className="errors">
-                    {errors?.name && <span>{errors.name.message}</span>}
+                    {errors?.name?.types ?
+                        Object.values(errors.name.types).map((message, index) => (
+                            <p key={index}>{message}</p>
+                        )) :
+                        errors?.name && <p>{errors.name.message}</p>
+                    }
                 </div>
                 <input type="submit"
                        value="Submit"/>
