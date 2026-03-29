@@ -1,5 +1,5 @@
 import './App.css'
-import {useForm} from "react-hook-form";
+import {useForm, useWatch} from "react-hook-form";
 import {fetchUser} from "./api/api.js";
 import {Errors} from "./components/Errors.jsx";
 
@@ -27,7 +27,8 @@ function App() {
         register,
         formState: {errors, isDirty},
         handleSubmit,
-        reset
+        reset,
+        control,
     } = useForm({
         mode: "onChange",
         reValidateMode: "onSubmit",
@@ -41,6 +42,16 @@ function App() {
         }
     });
 
+    const fullName = useWatch({
+        control,
+        name: "fullName"
+    });
+
+    const email = useWatch({
+        control,
+        name: "email"
+    });
+
     const onSubmit = (data) => {
         console.log(data);
         reset();
@@ -51,6 +62,8 @@ function App() {
             <h1>React Hook Form</h1>
             <hr/>
 
+            <h2>Hello, {fullName || "Guest"}</h2>
+
             <form onSubmit={(handleSubmit(onSubmit))}
                   autoComplete={'off'}>
                 <label htmlFor="name">Full name</label>
@@ -59,6 +72,9 @@ function App() {
                 <label htmlFor="email">Email</label>
                 <input type="text" {...register("email", restrictions.email)} />
                 <Errors errors={errors.email}/>
+                {email?.endsWith("@company.com") && (
+                    <p className={'p__success'}>Corporate email detected</p>
+                )}
                 <input type="submit"
                        value="Submit" disabled={!isDirty}/>
             </form>
