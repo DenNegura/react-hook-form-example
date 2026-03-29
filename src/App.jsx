@@ -1,26 +1,10 @@
 import './App.css'
 import {Controller, useForm, useWatch} from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import {fetchUser} from "./api/api.js";
 import {Errors} from "./components/Errors.jsx";
 import {CustomInput} from "./components/CustomInput.jsx";
-
-const restrictions = {
-    fullName: {
-        required: "This field is required",
-        minLength: {value: 5, message: "Minimum length should be 5"},
-        maxLength: {value: 20, message: "Maximum length should be 10"},
-        pattern: {value: /^[A-Za-z ]+$/, message: "Must contain only letters"},
-    },
-    email: {
-        required: "This field is required",
-        minLength: {value: 5, message: "Minimum length should be 5"},
-        maxLength: {value: 50, message: "Maximum length should be 10"},
-        pattern: {
-            value: /^[A-Za-z0-9\\.]+@[A-Za-z0-9\\.]+.[a-z]+$/,
-            message: "Should be a valid email"
-        },
-    }
-}
+import userSchema from "./schema.js";
 
 function App() {
 
@@ -42,7 +26,8 @@ function App() {
                 fullName: data.firstName + " " + data.lastName,
                 email: data.email
             };
-        }
+        },
+        resolver: yupResolver(userSchema)
     });
 
     const fullName = useWatch({
@@ -115,7 +100,6 @@ function App() {
                 <Controller
                     name={"fullName"}
                     control={control}
-                    rules={restrictions.fullName}
                     defaultValue={""}
                     render={({field, fieldState}) => (
                         <>
@@ -133,7 +117,6 @@ function App() {
                 <Controller
                     name={"email"}
                     control={control}
-                    rules={restrictions.email}
                     defaultValue={""}
                     render={({field, fieldState}) => (
                         <>
