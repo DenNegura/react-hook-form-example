@@ -1,7 +1,8 @@
 import './App.css'
-import {useForm, useWatch} from "react-hook-form";
+import {Controller, useForm, useWatch} from "react-hook-form";
 import {fetchUser} from "./api/api.js";
 import {Errors} from "./components/Errors.jsx";
+import {CustomInput} from "./components/CustomInput.jsx";
 
 const restrictions = {
     fullName: {
@@ -24,8 +25,7 @@ const restrictions = {
 function App() {
 
     const {
-        register,
-        formState: {errors, isDirty},
+        formState: {isDirty},
         handleSubmit,
         reset,
         control,
@@ -112,15 +112,33 @@ function App() {
 
             <form onSubmit={(handleSubmit(onSubmit))}
                   autoComplete={'off'}>
-                <label htmlFor="name">Full name</label>
-                <input type="text"
-                       {...register("fullName", restrictions.fullName)}
-                       onBlur={normalizeName}
+                <Controller
+                    name={"fullName"}
+                    control={control}
+                    rules={restrictions.fullName}
+                    defaultValue={""}
+                    render={({field, fieldState}) => (
+                        <>
+                            <CustomInput
+                                {...field}
+                                label={"Full name"}
+                                onBlur={normalizeName}/>
+                            <Errors errors={fieldState.error}/>
+                        </>
+                    )}
                 />
-                <Errors errors={errors.fullName}/>
-                <label htmlFor="email">Email</label>
-                <input type="text" {...register("email", restrictions.email)} />
-                <Errors errors={errors.email}/>
+                <Controller
+                    name={"email"}
+                    control={control}
+                    rules={restrictions.email}
+                    defaultValue={""}
+                    render={({field, fieldState}) => (
+                        <>
+                            <CustomInput {...field} label={"Email"}/>
+                            <Errors errors={fieldState.error}/>
+                        </>
+                    )}
+                />
                 {email?.endsWith("@company.com") && (
                     <p className={'p__success'}>Corporate email detected</p>
                 )}
