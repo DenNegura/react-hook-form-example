@@ -30,7 +30,8 @@ function App() {
         reset,
         control,
         setValue,
-        getValues
+        getValues,
+        trigger,
     } = useForm({
         mode: "onChange",
         reValidateMode: "onSubmit",
@@ -86,6 +87,17 @@ function App() {
         }
     };
 
+    const validateEmail = async () => {
+        const isValid = await trigger("email");
+        const email = getValues("email");
+
+        if (isValid) {
+            alert(`Email (${email}) is valid`);
+        } else {
+            alert(`Email (${email}) is not valid`);
+        }
+    }
+
     const onSubmit = (data) => {
         console.log(data);
         reset();
@@ -115,6 +127,7 @@ function App() {
                 <div className="buttons">
                     <button type="button" onClick={fillDemoUser}>Fill demo data</button>
                     <button type="button" onClick={checkEmailType}>Check email type</button>
+                    <button type="button" onClick={validateEmail}>Validate email</button>
                 </div>
                 <input
                     type="submit"
