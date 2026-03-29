@@ -46,6 +46,11 @@ hr {
     border-top: 1px solid var(--border-color);
 }
 
+label {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
 form {
     border: 1px solid var(--border-color);
     border-radius: 0.7rem;
@@ -93,6 +98,10 @@ input[type="submit"]:disabled {
     font-size: 1rem;
 }
 
+.dirty-fields {
+    color: var(--secondary-color);
+    font-size: 1rem;
+}
 @media (width > 700px) {
     .app, .root {
         width: 700px;
