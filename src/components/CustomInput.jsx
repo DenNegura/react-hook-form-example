@@ -1,15 +1,20 @@
-function CustomInput({label, value, onChange, onBlur}) {
-    return (
-        <>
-            <label>{label}
+import {forwardRef} from "react";
+
+const CustomInput = forwardRef(
+    ({label, value, onChange, name, ...props}, ref) => {
+        return (
+            <label>
+                {label}
                 <input
-                    value={value}
+                    ref={ref}
+                    name={name}
+                    value={value ?? ""}
                     onChange={(e) => onChange(e.target.value)}
-                    onBlur={onBlur}
+                    {...props}
                 />
             </label>
-        </>
-    );
-}
+        );
+    }
+);
 
 export {CustomInput};

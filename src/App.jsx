@@ -33,7 +33,7 @@ function App() {
         getValues,
         trigger,
     } = useForm({
-        mode: "onChange",
+        mode: "onBlur",
         reValidateMode: "onSubmit",
         criteriaMode: "all",
         defaultValues: async () => {
@@ -122,7 +122,10 @@ function App() {
                             <CustomInput
                                 {...field}
                                 label={"Full name"}
-                                onBlur={normalizeName}/>
+                                onBlur={() => {
+                                    field.onBlur();
+                                    normalizeName();
+                                }}/>
                             <Errors errors={fieldState.error}/>
                         </>
                     )}
