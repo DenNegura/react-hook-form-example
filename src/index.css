@@ -68,7 +68,7 @@ form {
     background-color: rgba(255, 255, 255, 0.02);
 }
 
-input {
+input, button {
     font-family: var(--font-family), sans-serif;
     width: 100%;
     padding: 0.7rem 1rem;
@@ -79,21 +79,21 @@ input {
     font-size: 1.2rem;
 }
 
-input:focus {
+input:focus, button:focus {
     outline: none;
     border-color: var(--secondary-color);
 }
 
-input[type="submit"] {
+input[type="submit"], button {
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover, button:hover {
     background-color: var(--secondary-color);
 }
 
-input[type="submit"]:disabled {
+input[type="submit"]:disabled, button:disabled {
     background-color: var(--border-color);
     cursor: auto;
 }
@@ -111,6 +111,11 @@ input[type="submit"]:disabled {
 .p__success {
     color: #00b894;
     font-size: 1rem;
+}
+
+.buttons {
+    display: flex;
+    gap: 1rem;
 }
 
 @media (width > 700px) {

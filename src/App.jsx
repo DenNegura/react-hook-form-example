@@ -29,6 +29,8 @@ function App() {
         handleSubmit,
         reset,
         control,
+        setValue,
+        getValues
     } = useForm({
         mode: "onChange",
         reValidateMode: "onSubmit",
@@ -52,6 +54,38 @@ function App() {
         name: "email"
     });
 
+    const fillDemoUser = () => {
+        setValue("fullName", "John Doe", {
+            shouldDirty: true,
+            shouldValidate: true
+        });
+
+        setValue("email", "john@company.com", {
+            shouldDirty: true,
+            shouldValidate: true
+        });
+    };
+
+    const normalizeName = () => {
+        const currentName = getValues("fullName");
+
+        if (currentName) {
+            setValue("fullName", currentName.trim(), {
+                shouldDirty: true
+            });
+        }
+    };
+
+    const checkEmailType = () => {
+        const currentEmail = getValues("email");
+
+        if (currentEmail?.endsWith("@company.com")) {
+            alert("Corporate user detected");
+        } else {
+            alert("Regular user");
+        }
+    };
+
     const onSubmit = (data) => {
         console.log(data);
         reset();
@@ -67,7 +101,10 @@ function App() {
             <form onSubmit={(handleSubmit(onSubmit))}
                   autoComplete={'off'}>
                 <label htmlFor="name">Full name</label>
-                <input type="text" {...register("fullName", restrictions.fullName)} />
+                <input type="text"
+                       {...register("fullName", restrictions.fullName)}
+                       onBlur={normalizeName}
+                />
                 <Errors errors={errors.fullName}/>
                 <label htmlFor="email">Email</label>
                 <input type="text" {...register("email", restrictions.email)} />
@@ -75,8 +112,15 @@ function App() {
                 {email?.endsWith("@company.com") && (
                     <p className={'p__success'}>Corporate email detected</p>
                 )}
-                <input type="submit"
-                       value="Submit" disabled={!isDirty}/>
+                <div className="buttons">
+                    <button type="button" onClick={fillDemoUser}>Fill demo data</button>
+                    <button type="button" onClick={checkEmailType}>Check email type</button>
+                </div>
+                <input
+                    type="submit"
+                    value="Submit"
+                    disabled={!isDirty}
+                />
             </form>
         </div>
     )
